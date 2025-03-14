@@ -1,0 +1,18 @@
+package com.gdu.dev_springboot_demo.service.OrderItems;
+
+import com.gdu.dev_springboot_demo.database.OrderItems.IOrderItemRepository;
+import jakarta.servlet.http.HttpSession;
+
+public class OrderServiceImp implements IOrderItemService {
+
+    private IOrderItemRepository orderItemRepository;
+
+    public OrderServiceImp(IOrderItemRepository iOrderItemRepository){
+        this.orderItemRepository = iOrderItemRepository;
+    }
+
+    @Override
+    public void createOrder(HttpSession session) {
+
+    }
+}
