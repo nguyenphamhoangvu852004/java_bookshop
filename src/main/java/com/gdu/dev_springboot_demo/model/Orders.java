@@ -27,8 +27,12 @@ public class Orders   {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private Users users; // Mối quan hệ Many-to-One với User
 
-    @Column(name = "status", nullable = false, columnDefinition = "default 'PENDING'")
+//    @Column(name = "status", nullable = false, columnDefinition = "default 'PENDING'")
+//    private String status;
+
+    @Column(name = "status", nullable = false, columnDefinition = "VARCHAR(20) DEFAULT 'PENDING'")
     private String status;
+
 
     // Mối quan hệ OneToMany từ Orders đến OrderItems
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
