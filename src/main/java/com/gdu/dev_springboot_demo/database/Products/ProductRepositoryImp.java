@@ -29,4 +29,26 @@ public class ProductRepositoryImp implements IProductRepository {
         return this.em.find(Products.class, id);
     }
 
+    @Override
+    @Transactional
+    public void deleteProductById(UUID id) {
+        Products product = this.em.find(Products.class, id);
+        if (product != null) {
+            this.em.remove(product);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateProduct(UUID id, Products product) {
+        Products foundProduct = findById(id);
+        if (foundProduct != null) {
+            foundProduct.setName(product.getName());
+            foundProduct.setImageUrl(product.getImageUrl());
+            foundProduct.setDescription(product.getDescription());
+            foundProduct.setPrice(product.getPrice());
+            this.em.merge(foundProduct);
+        }
+    }
+
 }
