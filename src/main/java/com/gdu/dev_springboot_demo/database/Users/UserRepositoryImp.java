@@ -40,8 +40,12 @@ public class UserRepositoryImp implements IUserRepository {
     }
 
     @Override
-    public void deleteUser(Users users) {
-        this.em.remove(users);
+    @Transactional
+    public void deleteUser(UUID id) {
+        Users user = this.em.find(Users.class, id);
+        if(user != null){
+            this.em.remove(user);
+        }
     }
 
     @Override

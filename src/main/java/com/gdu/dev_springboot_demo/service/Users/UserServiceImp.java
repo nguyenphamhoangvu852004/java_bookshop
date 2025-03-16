@@ -32,9 +32,8 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public void deleteUser(Users users) {
-        this.iUserRepository.deleteUser(users);
-
+    public void deleteUser(UUID id) {
+        this.iUserRepository.deleteUser(id);
     }
 
     @Override
