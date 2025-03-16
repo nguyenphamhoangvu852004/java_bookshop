@@ -1,6 +1,7 @@
 package com.gdu.dev_springboot_demo.controller;
 
 import com.gdu.dev_springboot_demo.model.Users;
+import com.gdu.dev_springboot_demo.service.Roles.IRoleSerivce;
 import com.gdu.dev_springboot_demo.service.Users.IUserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
     private IUserService userService;
+    private IRoleSerivce roleService;
 
-    public AuthController(IUserService userService) {
+    public AuthController(IUserService userService, IRoleSerivce roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/formLogin")
@@ -48,6 +51,13 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "form/login";
         }
+
+        // Check role
+        if(checkUser.getRoles().equals(this.roleService.getRoleById(1))){
+            session.setAttribute("user", userAfterLogin);
+            return "admin/admin-users";
+        }
+
         // Nếu đăng nhập thành công, lưu vào session
         session.setAttribute("user", userAfterLogin);
         return "redirect:/"; // Chuyển hướng về trang chủ hoặc dashboard
