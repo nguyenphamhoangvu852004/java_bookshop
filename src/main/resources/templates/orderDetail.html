@@ -6,7 +6,10 @@
 </head>
 <body>
 <h1>
-  Trang nay hien thi chi tiet cua don hang do
+    <div>
+        Trang nay hien thi chi tiet cua don hang do
+        <div th:each="orderDetail : ${orderDetail}"></div>
+    </div>
 </h1>
 </body>
 </html>

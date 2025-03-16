@@ -26,7 +26,7 @@ public class OrderItems  {
   @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
   private Products products;
 
-  @ManyToOne
+  @ManyToOne()
   @JoinColumn(name ="order_id", referencedColumnName = "id", nullable = false)
   private Orders orders;
 

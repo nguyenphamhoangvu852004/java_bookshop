@@ -6,11 +6,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.gdu.dev_springboot_demo.model.CartItem;
 import com.gdu.dev_springboot_demo.model.Users;
@@ -76,4 +72,11 @@ public class CartController {
         return "redirect:/cart/view";
     }
 
+    @PostMapping("/remove")
+    public String removeFromCart(@RequestParam UUID id, HttpSession session) {
+        List<CartItem> cart = getCart(session);
+        cart.removeIf(item -> item.getId().equals(id));
+        session.setAttribute("cart", cart);
+        return "redirect:/cart/view";
+    }
 }

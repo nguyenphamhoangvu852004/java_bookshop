@@ -3,8 +3,6 @@ package com.gdu.dev_springboot_demo.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.management.relation.Role;
-import javax.swing.*;
 import java.util.List;
 import java.util.UUID;
 

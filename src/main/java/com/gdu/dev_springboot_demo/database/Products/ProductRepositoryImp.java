@@ -2,7 +2,6 @@ package com.gdu.dev_springboot_demo.database.Products;
 
 import com.gdu.dev_springboot_demo.model.Products;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class ProductRepositoryImp implements IProductRepository{
+public class ProductRepositoryImp implements IProductRepository {
 
     private EntityManager em;
 
@@ -29,6 +28,5 @@ public class ProductRepositoryImp implements IProductRepository{
     public Products findById(UUID id) {
         return this.em.find(Products.class, id);
     }
-
 
 }

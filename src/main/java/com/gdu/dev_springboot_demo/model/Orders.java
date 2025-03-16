@@ -31,7 +31,7 @@ public class Orders   {
     private String status;
 
     // Mối quan hệ OneToMany từ Orders đến OrderItems
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItems> listOrderItems;
 
     @Override
