@@ -7,7 +7,6 @@ import java.util.UUID;
 import com.gdu.dev_springboot_demo.model.Users;
 import org.springframework.stereotype.Repository;
 
-import com.gdu.dev_springboot_demo.database.OrderItems.IOrderItemRepository;
 import com.gdu.dev_springboot_demo.model.Orders;
 
 import jakarta.persistence.EntityManager;
@@ -16,7 +15,7 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public class OrderRepository implements IOrderRepository {
-    private EntityManager em;
+    private final EntityManager em;
     public OrderRepository(EntityManager em) {
         this.em = em;
     }
@@ -50,6 +49,27 @@ public class OrderRepository implements IOrderRepository {
         listOrders.forEach(System.out::println);
         System.out.println("Kich thuoc cua listOrders: "+listOrders.size());
         return listOrders;
+    }
+
+    @Override
+    public List<Orders> getAllOrders() {
+        String sql = "SELECT o FROM Orders o";
+        return this.em.createQuery(sql, Orders.class).getResultList();
+    }
+
+    @Override
+    public void updateOrders(UUID orderId, String status) {
+        Orders order = this.em.find(Orders.class, orderId);
+        if (!order.getStatus().equals(status)){
+            order.setStatus(status);
+            this.em.merge(order);
+        }
+    }
+
+    @Override
+    public List<Orders> filterOrdersByStatus(String status) {
+        String sql = "SELECT o FROM Orders o WHERE o.status = :status";
+        return this.em.createQuery(sql, Orders.class).setParameter("status", status).getResultList();
     }
 
 }

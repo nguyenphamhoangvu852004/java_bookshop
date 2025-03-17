@@ -8,6 +8,9 @@ public interface IOrderRepository {
 
     Orders creatOrders(UUID userId);
     List<Orders> getAllOrdersByUserId(UUID userId);
+    List<Orders> getAllOrders();
+    void updateOrders(UUID orderId, String status);
+    List<Orders> filterOrdersByStatus(String status);
 
 }
 
