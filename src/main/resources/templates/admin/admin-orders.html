@@ -38,8 +38,78 @@
 </nav>
 <main>
     <div class="container">
-        <h2>Orders</h2>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis porro iure quaerat aliquam! Optio dolorum in eum provident, facilis error repellendus excepturi enim dolor deleniti adipisci consectetur doloremque, unde maiores odit sapiente. Atque ab necessitatibus laboriosam consequatur eius similique, ex dolorum eum eaque sequi id veritatis voluptates perspiciatis, cupiditate pariatur.</p>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
+        </div>
+
+        <form th:action="@{/admin/orders}" method="get">
+            <label for="status">Chọn trạng thái:</label>
+            <select name="status" id="status" onchange="this.form.submit()">
+                <option value="">Tất cả</option>
+                <option value="PENDING" th:selected="${selectedStatus == 'PENDING'}">PENDING</option>
+                <option value="CANCELLED" th:selected="${selectedStatus == 'CANCELLED'}">CANCELLED</option>
+                <option value="COMPLETED" th:selected="${selectedStatus == 'COMPLETED'}">COMPLETED</option>
+                <option value="DELIVERED" th:selected="${selectedStatus == 'DELIVERED'}">DELIVERED</option>
+            </select>
+        </form>
+
+        <table class="table-orders">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.getId()}"></td>
+                <td th:text="${order.getUsers().getId()}"></td>
+                <td th:text="${order.getUsers().getUsername()}"></td>
+                <td th:text="${order.getStatus()}"></td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle status-btn" type="button"
+                                th:classappend="
+                                    ${order.getStatus() == 'PENDING'} ? 'pending' :
+                                    (${order.getStatus() == 'CANCELLED'} ? 'cancelled' :
+                                    (${order.getStatus() == 'COMPLETED'} ? 'completed' :
+                                    (${order.getStatus() == 'DELIVERED'} ? 'delivered' : '')))">
+                            <span class="current-status" th:text="${order.getStatus()}"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form th:action="@{/admin/order/{orderId}/PENDING(orderId=${order.getId()})}" method="post">
+                                    <input type="hidden" name="status" value="PENDING" />
+                                    <button class="dropdown-item pending" type="submit">PENDING</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form th:action="@{/admin/order/{orderId}/CANCELLED(orderId=${order.getId()})}" method="post">
+                                    <input type="hidden" name="status" value="CANCELLED" />
+                                    <button class="dropdown-item cancelled" type="submit">CANCELLED</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form th:action="@{/admin/order/{orderId}/COMPLETED(orderId=${order.getId()})}" method="post">
+                                    <input type="hidden" name="status" value="COMPLETED" />
+                                    <button class="dropdown-item completed" type="submit">COMPLETED</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form th:action="@{/admin/order/{orderId}/DELIVERED(orderId=${order.getId()})}" method="post">
+                                    <input type="hidden" name="status" value="DELIVERED" />
+                                    <button class="dropdown-item delivered" type="submit">DELIVERED</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 </body>

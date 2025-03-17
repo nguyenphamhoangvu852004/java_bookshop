@@ -174,7 +174,7 @@ td a {
 
 td:first-child,
 th:first-child {
-    width: 30px;
+    width: 170px;
     text-align: center;
 }
 
@@ -273,6 +273,131 @@ textarea {
 input[type="file"] {
     padding: 5px;
 }
+
+/* ======= DropDown Order Status ======== */
+ul{
+    list-style: none;
+}
+
+.table-orders td:nth-child(2),
+th:nth-child(2) {
+    width: 170px;
+    text-align: center;
+}
+
+.status-btn {
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    width: 120px;
+    text-align: center;
+}
+
+/* Ẩn dropdown menu ban đầu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    border-radius: 8px;
+    padding: 5px;
+    min-width: 150px;
+}
+
+.dropdown-menu .dropdown-item {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    width: 115px;
+    height: 38px;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.cancelled {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.completed {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.delivered {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* ========= Filter Order =========== */
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: var(--text-clr);
+}
+
+select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 2px solid var(--line-clr);
+    border-radius: 6px;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+select:hover {
+    border-color: var(--hover-clr);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--hover-clr);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+option {
+    font-weight: bold;
+    font-size: 14px;
+    background-color: var(--base-clr);
+    color: var(--text-clr);
+}
+
+option[value="PENDING"] {
+    background-color: #ffc107;
+    color: var(--text-clr);
+}
+
+option[value="CANCELLED"] {
+    background-color: #dc3545;
+    color: var(--text-clr);
+}
+
+option[value="COMPLETED"] {
+    background-color: #28a745;
+    color: var(--text-clr);
+}
+
+option[value="DELIVERED"] {
+    background-color: #17a2b8;
+    color: var(--text-clr);
+}
+
+
+
 
 @media(max-width: 800px){
     body{
