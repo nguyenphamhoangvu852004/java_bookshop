@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Service
 public class ProductServiceImp implements IProductService {
-    private IProductRepository iProductRepository;
+    private final IProductRepository iProductRepository;
 
     public ProductServiceImp(IProductRepository iProductRepository) {
         this.iProductRepository = iProductRepository;
@@ -24,5 +24,15 @@ public class ProductServiceImp implements IProductService {
     @Override
     public Products getProductById(UUID id) {
         return iProductRepository.findById(id);
+    }
+
+    @Override
+    public void deleteProductById(UUID id) {
+        iProductRepository.deleteProductById(id);
+    }
+
+    @Override
+    public void updateProduct(UUID id, Products product) {
+        iProductRepository.updateProduct(id, product);
     }
 }

@@ -9,4 +9,8 @@ public interface IOrderService {
 
     Orders createOrder(UUID userId);
     List<Orders> getAllOrdersByUserId(UUID userId);
+    List<Orders> getAllOrders();
+    void updateOrder(UUID userId, String status);
+    List<Orders> filterOrdersByStatus(String status);
+
 }
