@@ -50,27 +50,30 @@ function searchTable() {
     }
 }
 
-// Modal
-function openEditModal(id, name, description, price, imageUrl) {
-    document.getElementById("editId").value = id;
-    document.getElementById("editName").value = name;
-    document.getElementById("editDescription").value = description;
-    document.getElementById("editPrice").value = price;
-    document.getElementById("editImageUrl").value = imageUrl;
+function initDropdownHandlers() {
+    document.querySelectorAll(".dropdown-toggle").forEach(button => {
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            let dropdownMenu = this.nextElementSibling;
+            let isOpen = dropdownMenu.style.display === "block";
 
-    document.getElementById("editForm").action = "/admin/products/update/" + id; // Cập nhật action form
+            document.querySelectorAll(".dropdown-menu").forEach(menu => menu.style.display = "none");
 
-    document.getElementById("editModal").style.display = "block";
+            dropdownMenu.style.display = isOpen ? "none" : "block";
+        });
+    });
+
+    document.addEventListener("click", function (event) {
+        document.querySelectorAll(".dropdown-menu").forEach(menu => {
+            if (!menu.parentElement.contains(event.target)) {
+                menu.style.display = "none";
+            }
+        });
+    });
 }
 
-function closeEditModal() {
-    document.getElementById("editModal").style.display = "none";
-}
+document.addEventListener("DOMContentLoaded", function () {
+    initDropdownHandlers();
+});
 
-window.onclick = function(event) {
-    let modal = document.getElementById("editModal");
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-};
 
