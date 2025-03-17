@@ -1,15 +1,17 @@
 package com.gdu.dev_springboot_demo.controller;
 
+import com.gdu.dev_springboot_demo.database.Orders.IOrderRepository;
+import com.gdu.dev_springboot_demo.model.Orders;
 import com.gdu.dev_springboot_demo.model.Products;
+import com.gdu.dev_springboot_demo.service.Orders.IOrderService;
 import com.gdu.dev_springboot_demo.service.Products.IProductService;
 import com.gdu.dev_springboot_demo.service.Users.IUserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -17,10 +19,16 @@ public class AdminController {
 
     private final IUserService iUserService;
     private final IProductService iProductService;
+    private final IOrderService iOrderService;
 
-    public AdminController(IUserService iUserService, IProductService iProductService) {
+    public AdminController(
+            IUserService iUserService,
+            IProductService iProductService,
+            IOrderService iOrderService
+    ) {
         this.iUserService = iUserService;
         this.iProductService = iProductService;
+        this.iOrderService = iOrderService;
     }
 
     @GetMapping("/admin/users")
@@ -34,12 +42,6 @@ public class AdminController {
         iUserService.deleteUser(id);
         return "redirect:/admin/users";
     }
-
-    @GetMapping("/admin/orders")
-    public String managementOrdersPage(){
-        return "admin/admin-orders";
-    }
-
 
     @GetMapping("/admin/products")
     public String managementProductsPage(Model model){
@@ -65,4 +67,24 @@ public class AdminController {
         iProductService.updateProduct(id, updatedProduct);
         return "redirect:/admin/products";
     }
+
+    @GetMapping("/admin/orders")
+    public String managementOrdersPage(@RequestParam(required = false) String status, Model model){
+        List<Orders> orders;
+        if(status == null || status.isEmpty()){
+            orders = this.iOrderService.getAllOrders();
+        }else{
+            orders = this.iOrderService.filterOrdersByStatus(status);
+        }
+        model.addAttribute("orders", orders);
+        model.addAttribute("selectedStatus", status);
+        return "admin/admin-orders";
+    }
+
+    @PostMapping("/admin/order/{orderId}/{status}")
+    public String updateOrderStatus(@PathVariable String status, @PathVariable UUID orderId) {
+        this.iOrderService.updateOrder(orderId, status);
+        return "redirect:/admin/orders";
+    }
+
 }
