@@ -1,12 +1,10 @@
 package com.gdu.dev_springboot_demo.controller;
 
-import com.gdu.dev_springboot_demo.database.Orders.IOrderRepository;
 import com.gdu.dev_springboot_demo.model.Orders;
 import com.gdu.dev_springboot_demo.model.Products;
 import com.gdu.dev_springboot_demo.service.Orders.IOrderService;
 import com.gdu.dev_springboot_demo.service.Products.IProductService;
 import com.gdu.dev_springboot_demo.service.Users.IUserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +32,7 @@ public class AdminController {
     @GetMapping("/admin/users")
     public String getUsers(Model model) {
         model.addAttribute("users", iUserService.getAllUsers());
+        model.addAttribute("activePage", "users");
         return "admin/admin-users";
     }
 
@@ -46,6 +45,7 @@ public class AdminController {
     @GetMapping("/admin/products")
     public String managementProductsPage(Model model){
         model.addAttribute("products", iProductService.getAllProducts());
+        model.addAttribute("activePage", "products");
         return "admin/admin-products";
     }
 
@@ -78,6 +78,7 @@ public class AdminController {
         }
         model.addAttribute("orders", orders);
         model.addAttribute("selectedStatus", status);
+        model.addAttribute("activePage", "orders");
         return "admin/admin-orders";
     }
 
